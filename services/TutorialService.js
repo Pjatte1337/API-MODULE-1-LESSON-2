@@ -5,6 +5,7 @@ class TutorialService {
     }
 
     async getAll(condition, order, pagination) {
+        await new Promise(r => setTimeout(r, 2000));
         return this.tutorial.findAll({
             limit: pagination.limit,
             offset: pagination.offset,

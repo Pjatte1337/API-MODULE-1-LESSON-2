@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+require('./redis');
+
 
 var indexRouter = require('./routes/index');
 var tutorialsRouter = require('./routes/tutorials');
@@ -20,7 +22,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: 60 * 60 * 1000 // 1 hour
+}));
+
 
 app.use('/', indexRouter);
 app.use('/tutorials', tutorialsRouter);
